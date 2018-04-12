@@ -1,0 +1,109 @@
+<h1 style="margin-bottom:3%">Shipments</h1>
+<div style="margin-left:5%" style="background-color:white">
+  <p>
+    <button type="button" class="btn btn-link collapsed" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+      aria-controls="collapseSales" [disabled]="isDisabled">
+      <i class="fa fa-cogs fa-2x" aria-hidden="true">&nbsp;Setting</i>
+    </button>
+  </p>
+  <div id="collapseSales" [ngbCollapse]="isCollapsed">
+    <div class="card">
+      <div class="card-body">
+        <!---------------------------------------------------Period---------------------------------------------------------------->
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle-thin fa-stack-1x"></i>
+                  <i class="fa fa-angle-down fa-stack"></i>
+                </span> Period
+              </button>
+            </h5>
+          </div>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+            <div class="card-body" style="margin-left:4%">
+              <div class="form-group" style="margin-top:3%;">
+                <label for="startDate" style="margin-left:7%;">start Date </label>
+                <br>
+                <div style="margin-left:10%;">
+                  <input class="form-control" placeholder="yyyy-mm-dd" name="startDate" id="startDate" ngbDatepicker #d="ngbDatepicker" style="display:inline-block;width:15%">
+                  <div class="input-group-append" style="display:inline-block;margin-left:-3%">
+                    <a (click)="d.toggle()">
+                      <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+                <label for="endDate" style="margin-left:7%;">End Date </label>
+                <br>
+                <div style="margin-left:10%;">
+                  <input class="form-control" placeholder="yyyy-mm-dd" name="endDate" id="endDate" ngbDatepicker #d1="ngbDatepicker" style="display:inline-block;width:15%">
+                  <div class="input-group-append" style="display:inline-block;margin-left:-3%">
+                    <a (click)="d1.toggle()">
+                      <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       <!-------------------------------------------------------Quantity---------------------------------------------------------->
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle-thin fa-stack-1x"></i>
+                    <i class="fa fa-angle-down fa-stack"></i>
+                  </span> Quantity
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+              <div class="card-body" style="margin-left:4%">
+                <div class="form-group" style="margin-top:3%;">
+                  <label for="quantity" style="margin-left:7%;">Value </label>
+                    <select class="form-control" id="operateur" name="operateur" style="width:6%;display:inline-block;margin-left:1%">
+                      <option> > </option>
+                      <option> < </option>
+                      <option> = </option>
+                    </select>
+                    <input id="quantity" name="quantity" style="width:20%;display:inline-block;margin-left:1%" class="form-control" type="number" placeholder="0" step="10" min="0" max="100000000000000">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!---------------------------------------------weight-------------------------------------------------------------->
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle-thin fa-stack-1x"></i>
+                    <i class="fa fa-angle-down fa-stack"></i>
+                  </span> Weight
+                </button>
+              </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree">
+              <div class="card-body" style="margin-left:4%">
+                <div class="form-group" style="margin-top:3%;">
+                  <label for="weight" style="margin-left:7%;">Value </label>
+                    <select class="form-control" id="operateur2" name="operateur2" style="width:6%;display:inline-block;margin-left:1%">
+                      <option> > </option>
+                      <option> < </option>
+                      <option> = </option>
+                    </select>
+                    <input id="weight" name="weight" style="width:15%;display:inline-block;margin-left:1%" class="form-control" type="number" placeholder="0" step="10" min="0" max="100000000"><p style="display:inline-block;margin-left:-5%;">Ibs</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-success" style="float: right;">Submit</button>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,20 +1,71 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<html>
+<head>
+  
+</head>
+<body>
+  <div id="throbber" style="display:none; min-height:120px;"></div>
+  <div id="noty-holder"></div>
+  <div id="wrapper">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="http://localhost:4200">
+          <i class="fa fa-fw fa fa-tachometer fa-2x">&nbsp;&nbsp;DashBoard</i>
+        </a>
+      </div>
+      <ul class="nav navbar-right top-nav">
+        <li>
+          <a href="#" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats">
+            <i class="fa fa-bar-chart-o"></i>
+          </a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin User
+            <b class="fa fa-angle-down"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#">
+                <i class="fa fa-fw fa-power-off"></i> Logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav side-nav" style="width:70px">
+          <li>
+            <a  style="font-size:2.5em; color:Tomato;margin-left:7%;" href="http://ultravision/admin">
+              <i class="fab fa-magento"></i>
+            </a>
+          </li>
+          <li>
+            <a (click)="getSales()">
+              <div style="text-align:center;margin-left:-30px;font-size:1.7em">
+                <i class="fas fa-dollar-sign"></i>
+                </div>
+                <p style="font-size:12px">SALES</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <div class="row" id="main">
+          <div class="col-sm-12 col-md-12 well" id="content">
+            <div *ngIf="flagSales">
+              <app-vente-form></app-vente-form>
+            </div>
+            <div *ngIf="flagOrders">
+               <app-order-form></app-order-form>
+            </div>
+            <div *ngIf="flagShipping">
+              <app-shipment-form></app-shipment-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
