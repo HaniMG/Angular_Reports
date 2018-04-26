@@ -1,20 +1,51 @@
 <h1 style="margin-bottom:3%">Sales</h1>
 <div *ngIf="attributes">
-  <p-fieldset legend="Settings" [toggleable]=true [collapsed]=isCollapsed>
+  <p-fieldset legend="Filters" [toggleable]=true [collapsed]=isCollapsed>
     <form #venteForm="ngForm" style="margin-left:5%">
       <p-accordion>
         <!------------------------------------------------------------Amount of sales-------------------------------------------------------------------->
-        <p-accordionTab header="General Information" [selected]="true">
+        <p-accordionTab header="Order Information" [selected]="true">
           <div style="margin-left:4%">
             <div class="form-group">
-              <label for="amount">Amount</label>
-              <select class="form-control" id="operateur" name="operateur" style="width:6%;display:inline-block;margin-left:1%" [disabled]=flagFornewSearch>
+              <label for="amount">Total Price</label>
+              <select class="form-control" id="operateur" name="operateur" style="width:6%;display:inline-block;margin-left:1%" [(ngModel)]="model.operator1"
+                [disabled]=flagFornewSearch>
                 <option value="gteq"> > </option>
-                <option value="lteq"> < </option>
-                <option value="eq"> = </option>
+                <option value="lteq">
+                  < </option>
+                    <option value="eq"> = </option>
               </select>
               <input id="amount" name="amount" style="width:20%;display:inline-block;margin-left:1%" class="form-control" type="number"
                 placeholder="0.000" step="1.000" min="0" max="100000000000000" [(ngModel)]="model.amount" [disabled]=flagFornewSearch>
+            </div>
+          </div>
+
+          <div>
+            <label style="margin-left:4%;">Period</label>
+            <br>
+            <label for="startDate" style="margin-left:8%;">From : </label>
+            <br>
+            <div style="margin-left:10%;">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="startDate" id="startDate" ngbDatepicker #d="ngbDatepicker" style="display:inline-block;width:15%"
+                [(ngModel)]="model.From" [disabled]=flagFornewSearch>
+              <div class="input-group-append" style="display:inline-block;margin-left:-3%">
+                <a (click)="d.toggle()">
+                  <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:1%">
+            <label for="endDate" style="margin-left:8%;">To : </label>
+            <br>
+            <div style="margin-left:10%;">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="endDate" id="endDate" ngbDatepicker #d1="ngbDatepicker" style="display:inline-block;width:15%"
+                [(ngModel)]="model.To" [disabled]=flagFornewSearch>
+              <div class="input-group-append" style="display:inline-block;margin-left:-3%">
+                <a (click)="d1.toggle()">
+                  <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                </a>
+              </div>
             </div>
           </div>
         </p-accordionTab>
@@ -23,7 +54,8 @@
           <div style="margin-left:4%">
             <div class="form-group" style="width:20%;display:inline-block;">
               <label for="attribute">Attribute</label>
-              <select (change)="onChange()" class="form-control" id="attribute" [(ngModel)]="model.product_attribute" name="attribute" required [disabled]=flagFornewSearch>
+              <select (change)="onChange()" class="form-control" id="attribute" [(ngModel)]="model.product_attribute" name="attribute"
+                required [disabled]=flagFornewSearch>
                 <option value="none" [defaultSelected]="true"> Choose attribute</option>
                 <option *ngFor="let attribute of attributes" [value]="attribute">
                   {{attribute}}
@@ -32,7 +64,8 @@
             </div>
             <div class="form-group" style="width:20%;display:inline-block;margin-left:5%">
               <label for="option">Option</label>
-              <select class="form-control" id="option" [(ngModel)]="model.attribute_option" name="option" [disabled]="!modeoption||flagFornewSearch" required>
+              <select class="form-control" id="option" [(ngModel)]="model.attribute_option" name="option" [disabled]="!modeoption||flagFornewSearch"
+                required>
                 <option value="none" [defaultSelected]="true"> Choose option</option>
                 <option value="all"> All option</option>
                 <option *ngFor="let option of options" [value]="option">
@@ -60,6 +93,7 @@
             <div class="form-group" style="margin-top:3%;" [hidden]=!flagAge_Gender>
               <label for="age" style="margin-left:7%;">Age</label>
               <select class="form-control" id="age" name="age" style="width:20%;margin-left:10%;" [(ngModel)]="model.customer_age" [disabled]=flagFornewSearch>
+                <option value="none">Choose the interval of age</option>
                 <option value="Less than 20 years">Less than 20 years</option>
                 <option value="Between 20 and 35 years">Between 20 and 35 years</option>
                 <option value="More than 35 years">More than 35 years</option>
@@ -86,51 +120,13 @@
             </div>
           </div>
         </p-accordionTab>
-        <!---------------------------------------------------------Local information------------------------------------------------------------>
-        <p-accordionTab header="Local Information">
-          <div style="margin-left:4%">
-            <div class="form-group" style="margin-top:3%;">
-              <label for="region" style="margin-left:7%;">Region</label>
-              <select class="form-control" id="region" name="region" style="width:17%;margin-left:10%;" [(ngModel)]="model.region" [disabled]=flagFornewSearch>
-                <option *ngFor="let v of ville" [value]="v">
-                  {{v}}
-                </option>
-              </select>
-            </div>
-            <div>
-              <label style="margin-left:7%;">Period</label>
-              <br>
-              <label for="startDate" style="margin-left:8%;">From : </label>
-              <br>
-              <div style="margin-left:10%;">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="startDate" id="startDate" ngbDatepicker #d="ngbDatepicker" style="display:inline-block;width:15%" [(ngModel)]="model.period.From" [disabled]=flagFornewSearch>
-                <div class="input-group-append" style="display:inline-block;margin-left:-3%">
-                  <a (click)="d.toggle()">
-                    <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div style="margin-top:1%">
-              <label for="endDate" style="margin-left:8%;">To : </label>
-              <br>
-              <div style="margin-left:10%;">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="endDate" id="endDate" ngbDatepicker #d1="ngbDatepicker" style="display:inline-block;width:15%" [(ngModel)]="model.period.To" [disabled]=flagFornewSearch>
-                <div class="input-group-append" style="display:inline-block;margin-left:-3%">
-                  <a (click)="d1.toggle()" >
-                    <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </p-accordionTab>
         <!----------------------------------Payment method-------------------------------------------------------------------->
-        <p-accordionTab header="Payment Method">
+        <p-accordionTab header="Payment Information">
           <div style="margin-left:4%">
             <div class="form-group" style="margin-top:3%;">
-              <label for="payment" style="margin-left:7%;"> Method</label>
-              <select class="form-control" id="payment" name="payment" style="width:25%;display:inline-block;margin-left:1%" [(ngModel)]="model.payment_method" [disabled]=flagFornewSearch>
+              <label for="payment" style="margin-left:7%;"> Payment Method</label>
+              <select class="form-control" id="payment" name="payment" style="width:25%;display:inline-block;margin-left:1%" [(ngModel)]="model.payment_method"
+                [disabled]=flagFornewSearch>
                 <option value="none"> Choose a Method </option>
                 <option *ngFor="let method of payment_method" [value]="method.label"> {{method.label}} </option>
               </select>
@@ -138,20 +134,34 @@
           </div>
         </p-accordionTab>
         <!---------------------------------------------Shipping---------------------------------------------------------->
-        <p-accordionTab header="Shipments">
+        <p-accordionTab header="Shipping Information">
           <div style="margin-left:4%">
             <div class="form-group" style="margin-top:3%;">
-              <label for="shipment_method" style="margin-left:7%;">Method </label>
-              <select class="form-control" id="shipment_method" name="shipment_method" style="width:15%;display:inline-block;margin-left:1%" [(ngModel)]="model.shipments_method" [disabled]=flagFornewSearch>
+              <label for="region" style="margin-left:7%;">Region</label>
+              <select class="form-control" id="region" name="region" style="width:15%;display:inline-block;margin-left:1%" [(ngModel)]="model.region"
+                [disabled]=flagFornewSearch>
+                <option value="none">Choose a region</option>
+                <option *ngFor="let v of ville" [value]="v">
+                  {{v}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-top:3%;">
+              <label for="shipment_method" style="margin-left:7%;">Shipment Method</label>
+              <select class="form-control" id="shipment_method" name="shipment_method" style="width:15%;display:inline-block;margin-left:1%"
+                [(ngModel)]="model.shipments_method" [disabled]=flagFornewSearch>
+                <option value="none"> Choose a Method </option>
                 <option *ngFor="let method of shipment_method" [value]="method.label">{{method.label}}</option>
               </select>
             </div>
             <div class="form-group" style="margin-top:3%;">
               <label for="weight" style="margin-left:7%;">Weight </label>
-              <select class="form-control" id="operateur2" name="operateur2" style="width:6%;display:inline-block;margin-left:1%" [disabled]=flagFornewSearch>
+              <select class="form-control" id="operateur2" name="operateur2" style="width:6%;display:inline-block;margin-left:1%" [(ngModel)]="model.operator2"
+                [disabled]=flagFornewSearch>
                 <option value="gteq"> > </option>
-                <option value="lteq"> < </option>
-                <option value="eq"> = </option>
+                <option value="lteq">
+                  < </option>
+                    <option value="eq"> = </option>
               </select>
               <input id="weight" name="weight" style="width:15%;display:inline-block;margin-left:1%" class="form-control" type="number"
                 placeholder="0" step="10" min="0" max="100000000" [(ngModel)]="model.shipments_weight" [disabled]=flagFornewSearch>
@@ -162,50 +172,114 @@
       </p-accordion>
       <br>
       <div *ngIf="!flagFornewSearch">
-      <button (click)="clear()" type="submit" Class="btn btn-warning" style="float: right;"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;&nbsp;Clear</button>
-      <button (click)="getChartsData()" type="submit" class="btn btn-success" style="float: right;margin-right:1%"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;&nbsp;Submit</button>
-    </div>
-    <div *ngIf="flagFornewSearch">
-      <button (click)="newSearch()" type="submit" Class="btn btn-warning" style="margin-left:40%;"><i class="fas fa-search-plus"></i>&nbsp;&nbsp;New Reports</button>
-    </div>
+        <button (click)="clear()" type="submit" Class="btn btn-warning" style="float: right;">
+          <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;&nbsp;Clear</button>
+        <button (click)="getChartsData()" type="submit" class="btn btn-success" style="float: right;margin-right:1%">
+          <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;&nbsp;Submit</button>
+      </div>
+      <div *ngIf="flagFornewSearch">
+        <button (click)="newSearch()" type="submit" Class="btn btn-warning" style="margin-left:40%;">
+          <i class="fas fa-search-plus"></i>&nbsp;&nbsp;New Search</button>
+      </div>
     </form>
   </p-fieldset>
 </div>
 <!--------------------------------------------charts---------------------------------------------------------------------------->
 <div [hidden]=!flagSpinner style="margin-left:40%;margin-top:10%;">
-<p-progressSpinner></p-progressSpinner>
+  <p-progressSpinner [style]="{width: '100px', height: '100px'}" strokeWidth="5" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
 </div>
 <div *ngIf="flagCharts" style="margin-top:2%;visibility:visible">
-  <p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu>
-  <button type="button" class="btn btn-outline-secondary" style="float:right" (click)="exportPDF()" [disabled]=flagmap>
-    <span class="glyphicon glyphicon-share"></span> Export to PDF</button>
-  <div *ngIf="flagbar" id="bar" style="width:50%; margin-left:20%;margin-top:2%;"  #bar>
-    <h3>Bar Chart</h3>
-    <p-chart type="bar" [data]="bardata" #barchart ></p-chart>
-  </div>
-  <div *ngIf="flagline" id="line" style="width:50%;margin-left:20%;margin-top:4%;"  #line>
-    <h3>Line Chart</h3>
-    <p-chart type="line" [data]="data" #linechart></p-chart>
-  </div>
-  <div *ngIf="flagpie" id="pie" #pie>
-    <h3>Pie Chart</h3>
-    <div style="width:50%;display:inline-block">
+  <div *ngIf="ListOfSales.length > 0;else elseBlock">
+    <p-tabMenu [model]="items" [activeItem]="items[0]"></p-tabMenu>
+    <button type="button" class="btn btn-outline-secondary" style="float:right" (click)="exportPDF()" [disabled]=flagmap>
+      <span class="glyphicon glyphicon-share"></span> Export to PDF</button>
+    <div *ngIf="flagbar" id="bar" style="width:50%; margin-left:20%;margin-top:2%;" #bar>
+      <h3>Bar Chart</h3>
+      <p-chart type="bar" [data]="bardata" #barchart></p-chart>
+    </div>
+    <div *ngIf="flagline && flagSalesByDay" id="line" style="width:50%;margin-left:20%;margin-top:4%;" #line>
+      <h3>Line Chart</h3>
+      <p-chart type="line" [data]="linedata" #linechart></p-chart>
+    </div>
+    <div *ngIf="flagline && !flagSalesByDay" style="margin-top:5%;">
+      <p-message style="margin-left:40%" severity="error" text="Not suported data for this type of charts"></p-message>
+    </div>
+    <div *ngIf="flagpie && model.customer_group=='none'" id="pie" style="width:50%;margin-left:20%;margin-top:4%;" #pie>
+      <h3>Pie Chart</h3>
       <p-chart type="pie" [data]="piedata" #piechart></p-chart>
     </div>
-    <div style="width:50%;display:inline-block;float: right;">
-      <p-chart type="radar" [data]="radardata" style="width:50%" #radarchart></p-chart>
+    <div *ngIf="flagpie && model.customer_group!='none'" id="pie" style="width:50%;margin-left:20%;margin-top:4%;" #pie>
+      <p-message style="margin-left:40%" severity="error" text="Not suported data for this type of charts"></p-message>
     </div>
-    <div style="width:50%;display:inline-block">
-      <p-chart type="polarArea" [data]="polardata" style="width:50%" #polarchart></p-chart>
+    <div *ngIf="flagmap && model.region == 'none'" id="map" #map>
+      <h3>Map</h3>
+      <p-gmap id="mapchart" [options]="gmap" [overlays]="overlays" [style]="{'width':'45%','height':'500px','margin-left':'20%'}"
+        #mapchart></p-gmap>
     </div>
-    <div style="width:50%;display:inline-block;float: right;">
-      <p-chart type="doughnut" [data]="Doughnutdata" style="width:50%" #doughnutchart></p-chart>
+    <div *ngIf="flagmap && model.region != 'none'" style="margin-top:5%;">
+      <p-message style="margin-left:40%" severity="error" text="Not suported data for this type of charts"></p-message>
+    </div>
+    <!------------------------------------------------list of records------------------------------------------------------------------>
+    <div style="margin-top:5%">
+      <div style="float:right;margin-right:3%;padding-top: 0.2%">
+        <p-multiSelect styleClass="ui-button-warning" (onChange)="changeTable()" [options]="activeColumns" [panelStyle]="{minWidth:'13em'}"
+          [(ngModel)]="selectedColumns"></p-multiSelect>
+      </div>
+      <h4 style="float:right;margin-right:1%;">
+        <b>Columns :</b>
+      </h4>
+      <p style="float:right;margin-right:3%;padding-top: 0.5%">
+        <b>{{ListOfSales.length}} Orders</b>
+      </p>
+      <h4 style="float:right;margin-right:1%;">
+        <b>Rows :</b>
+      </h4>
+      <div >
+        <table class="table" id="table" #records>
+          <thead style="background-color:rgba(10, 10, 10, 0.5)">
+            <tr>
+              <th scope="col">Id</th>
+              <th [hidden]=!ListOfColumns.Purchase_Point scope="col">Purchase Point</th>
+              <th [hidden]=!ListOfColumns.Purchase_Date scope="col">Purchase Date</th>
+              <th [hidden]=!ListOfColumns.Bill_to_Name scope="col">Billed to</th>
+              <th [hidden]=!ListOfColumns.ship_to_Name scope="col">Shiped to</th>
+              <th [hidden]=!ListOfColumns.ship_address scope="col">Ship adress</th>
+              <th [hidden]=!ListOfColumns.List_of_Products scope="col">List-of Products</th>
+              <th [hidden]=!ListOfColumns.Grand_Total scope="col">Grand Total</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let order of ListOfSales">
+              <th scope="row">{{order.entity_id}}</th>
+              <td [hidden]=!ListOfColumns.Purchase_Point>
+                <div [innerHTML]="replaceLineBreak(order.store_name)"></div>
+              </td>
+              <td [hidden]=!ListOfColumns.Purchase_Date>{{order.created_at}}</td>
+              <td [hidden]=!ListOfColumns.Bill_to_Name>{{order.bill_to_name}}</td>
+              <td [hidden]=!ListOfColumns.ship_to_Name>
+                {{order.ship_to_name}}
+              </td>
+              <td [hidden]=!ListOfColumns.ship_address>
+                {{order.region}}&nbsp;{{order.city}}
+                <br>{{order.street}}
+              </td>
+              <td [hidden]=!ListOfColumns.List_of_Products>
+                <p *ngFor="let product  of order.items">
+                  {{product}}
+                  <br>
+                </p>
+              </td>
+              <td [hidden]=!ListOfColumns.Grand_Total>{{order.grand_total}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-  <div *ngIf="flagmap" id="map" #map>
-    <h3>Map</h3>
-    <p-gmap id="mapchart" [options]="gmap" [overlays]="overlays" [style]="{'width':'100%','height':'450px'}" #mapchart></p-gmap>
-  </div>
-</div>
+
+  <ng-template #elseBlock>
+    <p-message style="margin-left:40% ;" severity="error" text="There is no data with such filters"></p-message>
+  </ng-template>
 
 

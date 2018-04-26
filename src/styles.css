@@ -2,3 +2,4 @@
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
 @import url('primeng/resources/themes/omega/theme.css');
 @import url('primeng/resources/primeng.min.css');
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";

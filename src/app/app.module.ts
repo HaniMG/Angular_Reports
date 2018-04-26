@@ -19,6 +19,10 @@ import {TabViewModule} from 'primeng/tabview';
 import {RouterModule, Routes} from '@angular/router';
 import {FieldsetModule} from 'primeng/fieldset';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {TableModule} from 'primeng/table';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 const appRoutes: Routes=[]
 @NgModule({
   declarations: [
@@ -43,7 +47,11 @@ const appRoutes: Routes=[]
     TabMenuModule,
     TabViewModule,
     FieldsetModule,
+    TableModule,
+    MessagesModule,
+    MessageModule,
     ProgressSpinnerModule,
+    MultiSelectModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true }
