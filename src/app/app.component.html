@@ -76,13 +76,13 @@
     <div id="page-wrapper">
       <div class="container-fluid">
         <div class="row" id="main">
-          <div class="col-sm-12 col-md-12 well" id="content">
+          <div class="col-sm-12 col-md-12" id="content">
             <div *ngIf="flagSales">
               <app-vente-form></app-vente-form>
             </div>
             <div *ngIf="flagCustomer">
-                <h1>Customer</h1>
-              </div>
+              <app-customer-form></app-customer-form>
+            </div>
           </div>
         </div>
       </div>

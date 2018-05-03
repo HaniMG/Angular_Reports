@@ -23,13 +23,15 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {TableModule} from 'primeng/table';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import { CustomerFormComponent } from './customer-form/customer-form.component';
 const appRoutes: Routes=[]
 @NgModule({
   declarations: [
     AppComponent,
     VenteFormComponent,
     OrderFormComponent,
-    ShipmentFormComponent
+    ShipmentFormComponent,
+    CustomerFormComponent
   ],
   imports: [
     BrowserModule,

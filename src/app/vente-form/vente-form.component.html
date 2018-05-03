@@ -1,4 +1,4 @@
-<h1 style="margin-bottom:3%">Sales</h1>
+<h1 style="margin-bottom:2%">Sales</h1>
 <div *ngIf="attributes">
   <p-fieldset legend="Filters" [toggleable]=true [collapsed]=isCollapsed>
     <form #venteForm="ngForm" style="margin-left:5%">
@@ -16,7 +16,7 @@
                     <option value="eq"> = </option>
               </select>
               <input id="amount" name="amount" style="width:20%;display:inline-block;margin-left:1%" class="form-control" type="number"
-                placeholder="0.000" step="1.000" min="0" max="100000000000000" [(ngModel)]="model.amount" [disabled]=flagFornewSearch>
+                placeholder="0.000" step="100.000" min="0" max="100000000000000" [(ngModel)]="model.amount" [disabled]=flagFornewSearch>
             </div>
           </div>
 
@@ -194,26 +194,22 @@
     <button type="button" class="btn btn-outline-secondary" style="float:right" (click)="exportPDF()" [disabled]=flagmap>
       <span class="glyphicon glyphicon-share"></span> Export to PDF</button>
     <div *ngIf="flagbar" id="bar" style="width:50%; margin-left:20%;margin-top:2%;" #bar>
-      <h3>Bar Chart</h3>
       <p-chart type="bar" [data]="bardata" #barchart></p-chart>
     </div>
     <div *ngIf="flagline && flagSalesByDay" id="line" style="width:50%;margin-left:20%;margin-top:4%;" #line>
-      <h3>Line Chart</h3>
       <p-chart type="line" [data]="linedata" #linechart></p-chart>
     </div>
     <div *ngIf="flagline && !flagSalesByDay" style="margin-top:5%;">
       <p-message style="margin-left:40%" severity="error" text="Not suported data for this type of charts"></p-message>
     </div>
     <div *ngIf="flagpie && model.customer_group=='none'" id="pie" style="width:50%;margin-left:20%;margin-top:4%;" #pie>
-      <h3>Pie Chart</h3>
       <p-chart type="pie" [data]="piedata" #piechart></p-chart>
     </div>
     <div *ngIf="flagpie && model.customer_group!='none'" id="pie" style="width:50%;margin-left:20%;margin-top:4%;" #pie>
       <p-message style="margin-left:40%" severity="error" text="Not suported data for this type of charts"></p-message>
     </div>
     <div *ngIf="flagmap && model.region == 'none'" id="map" #map>
-      <h3>Map</h3>
-      <p-gmap id="mapchart" [options]="gmap" [overlays]="overlays" [style]="{'width':'45%','height':'500px','margin-left':'20%'}"
+      <p-gmap id="mapchart" [options]="gmap" [overlays]="overlays" [style]="{'width':'45%','height':'500px','margin-left':'20%','margin-top':'4%'}"
         #mapchart></p-gmap>
     </div>
     <div *ngIf="flagmap && model.region != 'none'" style="margin-top:5%;">

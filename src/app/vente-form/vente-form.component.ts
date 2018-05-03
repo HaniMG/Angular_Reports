@@ -80,7 +80,7 @@ export class VenteFormComponent implements OnInit {
   @ViewChild('linechart') linechart: UIChart
   @ViewChild('piechart') piechart: UIChart
 
-  @ViewChild('records') records:HTMLTableElement
+  @ViewChild('records') records: HTMLTableElement
 
   months_nb: number[] = [];
   months_names: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -90,7 +90,7 @@ export class VenteFormComponent implements OnInit {
   nb_salesByRegion: number[] = [];
   flagSalesByDay: boolean;
   nb_random: number;
-  test:any[]=[];
+  test: any[] = [];
   /**
    * Creates an instance of VenteFormComponent.
    * @param {HttpClient} http
@@ -178,7 +178,7 @@ export class VenteFormComponent implements OnInit {
     return this.http.get('http://ultravision/rest/all/V1/statistique/getShippingMethod');
   }
   /**
-   * list of sales by model
+   * list of sales by filters
    *
    * @returns
    * @memberof VenteFormComponent
@@ -191,7 +191,28 @@ export class VenteFormComponent implements OnInit {
       date_from = this.model.From['year'] + '-' + this.model.From['month'] + '-' + this.model.From['day'];
       date_to = this.model.To['year'] + '-' + this.model.To['month'] + '-' + this.model.To['day'];
     }
-    lien = 'http://ultravision/rest/all/V1/statistique/getSalesByCriterion/' + this.model.amount + '/' + this.model.operator1 + '/' + this.model.product_attribute + '/' + this.model.attribute_option + '/' + this.model.customer_group + '/' + this.model.customer_age + '/' + this.model.customer_gender + '/' + this.model.region + '/' + date_from + '/' + date_to + '/' + this.model.payment_method + '/' + this.model.shipments_method + '/' + this.model.shipments_weight + '/' + this.model.operator2;
+    let payment_method = "none";
+    if (this.model.payment_method != "none") {
+      switch (this.model.payment_method) {
+        case "No Payment Information Required": payment_method = "free"
+          break;
+        case "Check / Money order": payment_method = "checkmo"
+          break;
+        case "PayPal Billing Agreement": payment_method = "paypal_billing_agreement"
+          break;
+      }
+    }
+    let ship_method = "none";
+    if (this.model.shipments_method != "none") {
+      switch (this.model.shipments_method) {
+        case "Flat Rate": ship_method = "flatrate"
+          break;
+        case "Free Shipping": ship_method = "freeshipping"
+          break;
+      }
+    }
+
+    lien = 'http://ultravision/rest/all/V1/statistique/getSalesByCriterion/' + this.model.amount + '/' + this.model.operator1 + '/' + this.model.product_attribute + '/' + this.model.attribute_option + '/' + this.model.customer_group + '/' + this.model.customer_age + '/' + this.model.customer_gender + '/' + this.model.region + '/' + date_from + '/' + date_to + '/' + payment_method + '/' + ship_method + '/' + this.model.shipments_weight + '/' + this.model.operator2;
     return this.http.get(lien);
   }
 
@@ -209,18 +230,6 @@ export class VenteFormComponent implements OnInit {
     // get data of sales
     this.getSales().subscribe(data => {
       this.ListOfSales = data;
-      for (var order of this.ListOfSales) {
-        this.test.push({
-          id:order['entity_id'],
-          Purchase_Point:order['store_name'],
-          Purchase_Date:order['created_at'],
-          Bill_to_Name:order['bill_to_name'],
-          ship_to_Name:order['ship_to_name'],
-          ship_address:order['region'],
-          List_of_Products:order['street'],
-          Grand_Total:order['grand_total']
-        });
-      }
       this.getBarChartData()
       if (this.model.region == 'none') this.getnb_salesByRegion();
       if (this.model.From != 'none' && this.model.To != 'none' && this.model.From['year'] == this.model.To['year']) {
@@ -231,7 +240,7 @@ export class VenteFormComponent implements OnInit {
       }
       else
         this.flagSalesByDay = false;
-      if (this.model.customer_group == 'none')  this.getSalesByCustomerGroup()
+      if (this.model.customer_group == 'none') this.getSalesByCustomerGroup()
     });
     setTimeout(() => {
       this.flagSpinner = false;
@@ -291,41 +300,39 @@ export class VenteFormComponent implements OnInit {
         return true;
       }
     };
-    let content;
+    let y = 40;
+    let content = this.getTitreChart();
+    doc.fromHTML(content, 15, 0, {
+      'width': 200,
+      'elementHandlers': specialElementHandlers
+    });
+
 
     if (this.flagbar) {
-      content = this.barcontent.nativeElement;
       let image = this.barchart.getBase64Image();
-      doc.fromHTML(content.innerHTML, 15, 15, {
-        'width': 200,
-        'elementHandlers': specialElementHandlers
-      });
       doc.addImage(image, 'JPEG', 15, 40, 190, 80);
+      y = 130;
     }
-    if (this.flagline) {
-      content = this.linecontent.nativeElement;
+    if (this.flagline && this.flagSalesByDay) {
       let image = this.linechart.getBase64Image();
-      doc.fromHTML(content.innerHTML, 15, 15, {
-        'width': 200,
-        'elementHandlers': specialElementHandlers
-      });
       doc.addImage(image, 'JPEG', 15, 40, 190, 80);
+      y = 130;
     }
-    if (this.flagpie) {
-      content = this.piecontent.nativeElement;
+    if (this.flagpie && this.model.customer_group == "none") {
       let pieimage = this.piechart.getBase64Image();
-      doc.fromHTML(content.innerHTML, 15, 15, {
-        'width': 200,
-        'elementHandlers': specialElementHandlers
-      });
       doc.addImage(pieimage, 'JPEG', 15, 40, 190, 80);
+      y = 130;
     }
     var table = doc.autoTableHtmlToJson(document.getElementById("table"));
-    doc.autoTable(table.columns, table.data, {startY: 130});
+    doc.autoTable(table.columns, table.data, { startY: y });
     doc.save('test.pdf');
   }
 
-
+  /**
+   * Bar chart details
+   *
+   * @memberof VenteFormComponent
+   */
   getBarChartData() {
 
     for (var order of this.ListOfSales) {
@@ -361,7 +368,15 @@ export class VenteFormComponent implements OnInit {
       datasets: datasets
     }
   }
+  /**
+   * sales by month
+   *
+   * @param {any} year
+   * @returns
+   * @memberof VenteFormComponent
+   */
   getnb_salesByMonth(year) {
+
     let nb_sales: number[] = [];
     for (var order of this.ListOfSales) {
       let date = new Date(order['created_at']);
@@ -376,6 +391,11 @@ export class VenteFormComponent implements OnInit {
     return nb_sales;
   }
 
+  /**
+   * sales by region
+   *
+   * @memberof VenteFormComponent
+   */
   getnb_salesByRegion() {
     for (var order of this.ListOfSales) {
       let region = order['region'];
@@ -402,6 +422,11 @@ export class VenteFormComponent implements OnInit {
     }
   }
 
+  /**
+   * sales by period
+   *
+   * @memberof VenteFormComponent
+   */
   getsalesByDay() {
 
     let days: string[] = [];
@@ -435,7 +460,7 @@ export class VenteFormComponent implements OnInit {
 
   /**
    *
-   *
+   *sales by customer group
    * @memberof VenteFormComponent
    */
 
@@ -457,13 +482,41 @@ export class VenteFormComponent implements OnInit {
       datasets: [
         {
           data: nb_sales,
-          backgroundColor: this.array_region_color.slice(0, groups.length - 1),
-          hoverBackgroundColor: this.array_region_color.slice(0, groups.length - 1),
+          backgroundColor: this.array_region_color.slice(this.array_region_color.length-groups.length),
+          hoverBackgroundColor: this.array_region_color.slice(this.array_region_color.length-groups.length),
         }
       ]
     };
   }
-
+  /**
+   *
+   *
+   * @memberof VenteFormComponent
+   */
+  getTitreChart() {
+    let titre: string = "<b>fiters : </b><BR>";
+    titre += "Order Information: amount "
+    if (this.model.operator1 == "gteq") titre += " > "
+    if (this.model.operator1 == "lteq") titre += " < "
+    if (this.model.operator1 == "eq") titre += " = "
+    titre += this.model.amount;
+    if (this.model.From != "none" && this.model.To != "none") titre += " -- From : " + this.model.From['year'] + "-" + this.model.From['month'] + "-" + this.model.From['day'] + "  To : " + this.model.To['year'] + "-" + this.model.To['month'] + "-" + this.model.To['day'];
+    if (this.model.payment_method != "none") titre += "<BR>Payment Information : method = " + this.model.payment_method.toString();
+    if (this.model.product_attribute != "none" && this.model.attribute_option != "none") titre += "<BR>Product Information : " + this.model.product_attribute + "  =  " + this.model.attribute_option;
+    if (this.model.customer_group != "none") titre += "<BR>Customer Information : group = " + this.model.customer_group.toString();
+    if (this.model.region != "none" || this.model.shipments_method != "none") {
+      titre += "<BR>Shipment Information :";
+      if (this.model.region != "none") titre += "region = " + this.model.region.toString();
+      if (this.model.shipments_method != "none") {
+        titre += " method = " + this.model.shipments_method.toString() + " -- weight "
+        if (this.model.operator2 == "gteq") titre += " > "
+        if (this.model.operator2 == "lteq") titre += " < "
+        if (this.model.operator2 == "eq") titre += " = "
+        titre += this.model.shipments_weight
+      }
+    }
+    return titre;
+  }
   /**
    *
    *
@@ -503,11 +556,11 @@ export class VenteFormComponent implements OnInit {
     this.nb_random = position;
     return position;
   }
-   /**
-   * clear the formulaire
-   *
-   * @memberof VenteFormComponent
-   */
+  /**
+  * clear the formulaire
+  *
+  * @memberof VenteFormComponent
+  */
   clear() {
     this.model = new Vente(0, "gteq", "none", "none", "none", "none", "none", "none", "none", "none", "none", "none", 0, "gteq");
   }
