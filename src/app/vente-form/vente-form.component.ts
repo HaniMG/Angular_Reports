@@ -246,7 +246,7 @@ export class VenteFormComponent implements OnInit {
       this.flagSpinner = false;
       this.flagCharts = true;
 
-    }, 3000);
+    },0);
   }
 
   /**

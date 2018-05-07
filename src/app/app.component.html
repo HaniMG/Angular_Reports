@@ -1,7 +1,9 @@
 <html>
+
 <head>
 
 </head>
+
 <body>
   <div id="throbber" style="display:none; min-height:120px;"></div>
   <div id="noty-holder"></div>
@@ -33,42 +35,42 @@
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav" style="width:90px">
           <li>
-            <a  style="font-size:2.5em; color:Tomato;margin-left:15%;" href="http://ultravision/admin">
+            <a style="font-size:2.5em; color:Tomato;margin-left:15%;" href="http://ultravision/admin">
               <i class="fab fa-magento"></i>
             </a>
           </li>
           <li *ngIf="flagSales" style="background-color: #424242">
-            <a (click)="getSales()" >
+            <a (click)="getSales()">
               <div style="text-align:center;font-size:1.7em">
                 <i class="fas fa-dollar-sign"></i>
-                </div>
-                <p style="font-size:12px;margin-left:15%">SALES</p>
+              </div>
+              <p style="font-size:12px;margin-left:15%">SALES</p>
             </a>
           </li>
-          <li *ngIf="!flagSales" >
-              <a (click)="getSales()" >
-                <div style="text-align:center;font-size:1.7em">
-                  <i class="fas fa-dollar-sign"></i>
-                  </div>
-                  <p style="font-size:12px;margin-left:15%">SALES</p>
-              </a>
-            </li>
+          <li *ngIf="!flagSales">
+            <a (click)="getSales()">
+              <div style="text-align:center;font-size:1.7em">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
+              <p style="font-size:12px;margin-left:15%">SALES</p>
+            </a>
+          </li>
           <li *ngIf="flagCustomer" style="background-color: #424242">
-              <a (click)="getCustomer()">
-                <div style="text-align:center;font-size:1.7em">
-                  <i class="fas fa-user"></i>
-                  </div>
-                  <p style="font-size:12px;margin-left:-10px">CUSTOMERS</p>
-              </a>
-            </li>
-            <li *ngIf="!flagCustomer">
-                <a (click)="getCustomer()" >
-                  <div style="text-align:center;font-size:1.7em">
-                    <i class="fas fa-user"></i>
-                    </div>
-                    <p style="font-size:12px;margin-left:-10px">CUSTOMERS</p>
-                </a>
-              </li>
+            <a (click)="getCustomer()">
+              <div style="text-align:center;font-size:1.7em">
+                <i class="fas fa-user"></i>
+              </div>
+              <p style="font-size:12px;margin-left:-10px">CUSTOMERS</p>
+            </a>
+          </li>
+          <li *ngIf="!flagCustomer">
+            <a (click)="getCustomer()">
+              <div style="text-align:center;font-size:1.7em">
+                <i class="fas fa-user"></i>
+              </div>
+              <p style="font-size:12px;margin-left:-10px">CUSTOMERS</p>
+            </a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -77,6 +79,34 @@
       <div class="container-fluid">
         <div class="row" id="main">
           <div class="col-sm-12 col-md-12" id="content">
+            <div *ngIf="!flagSales && !flagCustomer">
+              <div class="jumbotron">
+                <h1>Welcome to our SPDashboard!</h1>
+                <p>An advanced statistics module on the Magento 2 platform, you can view sales statistics as well as customer
+                  statistics</p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p-card [style]="{width: '360px'}" styleClass="ui-card-shadow">
+                      <img src="../assets/Images/customer.jpeg" style="width: 100%;">
+                      <p-footer>
+                          <button style="margin-left: 40%" type="button" class="btn btn-info">Learn more</button>
+                      </p-footer>
+                    </p-card>
+                  </div>
+                  <div class="col-md-6">
+                    <p-card [style]="{width: '360px'}" styleClass="ui-card-shadow">
+                      <img src="../assets/Images/sales.png" style="width: 100%;height:150px">
+                      <p-footer>
+                          <button style="margin-left: 40%" type="button" class="btn btn-info">Learn more</button>
+
+                      </p-footer>
+                    </p-card>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
             <div *ngIf="flagSales">
               <app-vente-form></app-vente-form>
             </div>
@@ -88,5 +118,9 @@
       </div>
     </div>
   </div>
+
+
+
 </body>
+
 </html>

@@ -12,8 +12,7 @@ import {CardModule} from 'primeng/card';
 import {GMapModule} from 'primeng/gmap';
 import {AccordionModule} from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { OrderFormComponent } from './order-form/order-form.component';
-import { ShipmentFormComponent } from './shipment-form/shipment-form.component';
+
 import {TabMenuModule} from 'primeng/tabmenu';
 import {TabViewModule} from 'primeng/tabview';
 import {RouterModule, Routes} from '@angular/router';
@@ -24,13 +23,17 @@ import {TableModule} from 'primeng/table';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { CustomerFormComponent } from './customer-form/customer-form.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
+
+
+
+
 const appRoutes: Routes=[]
 @NgModule({
   declarations: [
     AppComponent,
     VenteFormComponent,
-    OrderFormComponent,
-    ShipmentFormComponent,
     CustomerFormComponent
   ],
   imports: [
@@ -57,7 +60,10 @@ const appRoutes: Routes=[]
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true }
-    )
+    ),
+    MDBBootstrapModule.forRoot(),
+    BrowserAnimationsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

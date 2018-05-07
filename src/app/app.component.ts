@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { VenteFormComponent } from './vente-form/vente-form.component';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,7 +13,7 @@ export class AppComponent {
   flagCustomer:boolean=false;
   constructor() {}
 
-  ngOnInit() {this.flagSales=true;}
+  ngOnInit() {}
 
   getSales(){
     this.flagSales=true;
@@ -22,7 +23,4 @@ export class AppComponent {
     this.flagSales=false;
     this.flagCustomer=true;
   }
-
-
-
 }

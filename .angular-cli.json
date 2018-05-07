@@ -19,14 +19,16 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
 
+        "styles.scss"
       ],
+
       "scripts": [
+
         "../node_modules/chart.js/dist/Chart.js",
         "../node_modules/jspdf/dist/jspdf.min.js",
-        "../node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
-
+        "../node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js",
+        "../node_modules/hammerjs/hammer.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -60,8 +62,8 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "component": {}
+    "styleExt": "scss",
+    "component": {
+    }
   }
-
 }

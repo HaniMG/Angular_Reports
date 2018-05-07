@@ -1,3 +1,113 @@
-<p>
-  customer-form works!
-</p>
+<h1 style="margin-bottom:2%">Customers</h1>
+<div>
+  <p-fieldset legend="Filters" [toggleable]=true [collapsed]=false>
+    <form #customerForm="ngForm" style="margin-left:5%">
+      <p-accordion>
+
+        <!-------------------------------Group---------------------------------------------------->
+        <p-accordionTab header="Customer Group">
+
+          <div style="display:inline-block;margin-left:10%">
+            <select class="form-control" id="group" name="group" required>
+              <option value="none" [defaultSelected]="true"> Choose a group</option>
+              <option *ngFor="let group of customer_group" [value]=group.label>
+                {{group.label}}
+              </option>
+            </select>
+          </div>
+
+        </p-accordionTab>
+        <!---------------------------------------------------------------------------------->
+
+        <!-----------------------------------Period------------------------------------------------>
+        <p-accordionTab header="Period">
+          <div class="ui-g" style="margin-left: 3%">
+            <div class="ui-g-3">
+              <label for="startDate">From : </label>
+            </div>
+            <div class="ui-g-3" style="margin-left: -20%;margin-top:-10px">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="startDate" id="startDate" ngbDatepicker #d="ngbDatepicker" style="width:50%;display:inline-block;">
+              <div class="input-group-append" style="display:inline-block;margin-left:-10%">
+                <a (click)="d.toggle()">
+                  <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+            <div class="ui-g-3" >
+              <label for="endDate">To : </label>
+            </div>
+            <div class="ui-g-3" style="margin-left: -20%;margin-top:-10px;">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="endDate" id="endDate" ngbDatepicker #d1="ngbDatepicker" style="width:50%;display:inline-block;">
+              <div class="input-group-append" style="display:inline-block;margin-left:-10%">
+                <a (click)="d1.toggle()">
+                  <i class="fa fa-calendar fa-lg" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </p-accordionTab>
+        <!---------------------------------------------------------------------------------->
+      </p-accordion>
+      <button type="submit" class="btn btn-success" style="float: right;margin-right:1%">
+        <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;&nbsp;Submit</button>
+    </form>
+  </p-fieldset>
+</div>
+
+<!------------------------------------------------list of records------------------------------------------------------------------>
+<div style="margin-top:5%">
+
+  <h4 style="float:right;margin-right:1%;">
+    <b>Columns :</b>
+  </h4>
+  <p style="float:right;margin-right:3%;padding-top: 0.5%">
+    <b>{{Sales.length}} Orders</b>
+  </p>
+  <h4 style="float:right;margin-right:1%;">
+    <b>Rows :</b>
+  </h4>
+  <div >
+    <table class="table" id="table" #records>
+      <thead style="background-color:rgba(10, 10, 10, 0.5)">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Purchase Point</th>
+          <th scope="col">Purchase Date</th>
+          <th scope="col">Billed to</th>
+          <th scope="col">Shiped to</th>
+          <th scope="col">Ship adress</th>
+          <th scope="col">List-of Products</th>
+          <th scope="col">Grand Total</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let order of Sales">
+          <th scope="row">{{order.entity_id}}</th>
+          <td>
+            <div [innerHTML]="replaceLineBreak(order.store_name)"></div>
+          </td>
+          <td>{{order.created_at}}</td>
+          <td>{{order.bill_to_name}}</td>
+          <td>
+            {{order.ship_to_name}}
+          </td>
+          <td>
+            {{order.region}}&nbsp;{{order.city}}
+            <br>{{order.street}}
+          </td>
+          <td>
+            <p *ngFor="let product  of order.items">
+              {{product}}
+              <br>
+            </p>
+          </td>
+          <td>{{order.grand_total}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+

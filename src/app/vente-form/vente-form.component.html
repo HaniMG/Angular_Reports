@@ -3,7 +3,7 @@
   <p-fieldset legend="Filters" [toggleable]=true [collapsed]=isCollapsed>
     <form #venteForm="ngForm" style="margin-left:5%">
       <p-accordion>
-        <!------------------------------------------------------------Amount of sales-------------------------------------------------------------------->
+        <!------------------------------------------------------------Order-------------------------------------------------------------------->
         <p-accordionTab header="Order Information" [selected]="true">
           <div style="margin-left:4%">
             <div class="form-group">
@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <div>
+
             <label style="margin-left:4%;">Period</label>
             <br>
             <label for="startDate" style="margin-left:8%;">From : </label>
@@ -34,7 +34,7 @@
                 </a>
               </div>
             </div>
-          </div>
+
           <div style="margin-top:1%">
             <label for="endDate" style="margin-left:8%;">To : </label>
             <br>
@@ -277,5 +277,4 @@
   <ng-template #elseBlock>
     <p-message style="margin-left:40% ;" severity="error" text="There is no data with such filters"></p-message>
   </ng-template>
-
 
